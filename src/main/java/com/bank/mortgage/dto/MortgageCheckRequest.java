@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 public record MortgageCheckRequest(
         @NotNull(message = "Income is required")
         @DecimalMin(value = "0.0", inclusive = false, message = "Income must be greater than 0")
-        @Positive(message = "Income must be positive")
         BigDecimal income,
 
         @Min(value = 1, message = "Maturity period must be at least 1 year")
