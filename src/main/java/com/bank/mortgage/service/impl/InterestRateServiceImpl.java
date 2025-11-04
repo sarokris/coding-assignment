@@ -1,33 +1,31 @@
 package com.bank.mortgage.service.impl;
 
 import com.bank.mortgage.dto.InterestRateResponse;
+import com.bank.mortgage.entity.InterestRates;
+import com.bank.mortgage.exception.InterestRateNotFoundException;
+import com.bank.mortgage.mapper.InterestRateMapper;
+import com.bank.mortgage.repo.InterestRateRepository;
 import com.bank.mortgage.service.InterestRateService;
-import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class InterestRateServiceImpl implements InterestRateService {
 
-    private final List<InterestRateResponse> rates = new ArrayList<>();
-
-    @PostConstruct
-    public void init() {
-        // initialize in-memory list on startup
-        rates.add(new InterestRateResponse(10, new BigDecimal("3.25"), Instant.now()));
-        rates.add(new InterestRateResponse(15, new BigDecimal("3.75"), Instant.now()));
-        rates.add(new InterestRateResponse(20, new BigDecimal("4.10"), Instant.now()));
-        rates.add(new InterestRateResponse(30, new BigDecimal("4.50"), Instant.now()));
-    }
+    private final InterestRateRepository repository;
+    private final InterestRateMapper interestRateMapper;
 
 
     @Override
     public List<InterestRateResponse> getCurrentInterestRates() {
-        return rates;
+        List<InterestRates> interestRates = repository.findAll();
+        if(CollectionUtils.isEmpty(interestRates))
+            throw new InterestRateNotFoundException("No interest rates found in the DB");
+        return interestRates.stream().map(interestRateMapper::toDto).toList();
 
     }
 
