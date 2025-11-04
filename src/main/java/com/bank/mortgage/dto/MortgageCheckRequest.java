@@ -1,5 +1,26 @@
 package com.bank.mortgage.dto;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.math.BigDecimal;
 
-public record MortgageCheckRequest(BigDecimal income, int maturityPeriod, BigDecimal loanValue, BigDecimal homeValue) {}
+public record MortgageCheckRequest(
+        @NotNull(message = "Income is required")
+        @DecimalMin(value = "0.0", inclusive = false, message = "Income must be greater than 0")
+        @Positive(message = "Income must be positive")
+        BigDecimal income,
+
+        @Min(value = 1, message = "Maturity period must be at least 1 year")
+        int maturityPeriod,
+
+        @NotNull(message = "Loan value is required")
+        @DecimalMin(value = "0.0", inclusive = false, message = "Loan value must be greater than 0")
+        BigDecimal loanValue,
+
+
+        @NotNull(message = "Home value is required")
+        @DecimalMin(value = "0.0", inclusive = false, message = "Home value must be greater than 0")
+        BigDecimal homeValue) {}
