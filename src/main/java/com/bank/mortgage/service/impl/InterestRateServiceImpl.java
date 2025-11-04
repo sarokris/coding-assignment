@@ -27,8 +27,22 @@ public class InterestRateServiceImpl implements InterestRateService {
         List<InterestRates> interestRates = repository.findAll();
         if(CollectionUtils.isEmpty(interestRates))
             throw new InterestRateNotFoundException("No interest rates found in the DB");
-        return interestRates.stream().map(interestRateMapper::toDto).toList();
+        return interestRates.stream().map(this::mapResponse).toList();
 
+    }
+
+    /**
+     * Quick workaround since Mapstruct Mapper does not seems to be working
+     * TODO needs to move this logic if mapper issue resolved
+     * @param iRate
+     * @return
+     */
+    private InterestRateResponse mapResponse(InterestRates iRate){
+        InterestRateResponse dto = interestRateMapper.toDto(iRate);
+        if(dto.maturityPeriod() == 0 && dto.interestRate() == null) {
+            dto = new InterestRateResponse(iRate.getMaturityPeriod(),iRate.getInterestRate(),iRate.getLastUpdate());
+        }
+        return dto;
     }
 
 }
