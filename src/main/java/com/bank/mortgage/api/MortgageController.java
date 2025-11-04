@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class MortgageController {
 
-    @GetMapping("/interest-rates")
+    @GetMapping("/mortgage-check")
     public ResponseEntity<String> getRates() {
         throw new UnsupportedOperationException(" Yet to be implemented");
     }
