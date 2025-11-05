@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface InterestRateService {
     List<InterestRateResponse> getCurrentInterestRates();
+    InterestRateResponse findByMaturityPeriod(int maturityPeriod);
 }

@@ -17,11 +17,13 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -111,5 +113,19 @@ class InterestRateServiceImplTest {
         verify(repository, times(1)).findAll();
         verify(interestRateMapper, never()).toDto(any());
     }
+
+    @Test
+    @DisplayName(" Expect the InterestRateNotFoundException when calling findByMaturityPeriod")
+    void testFindInterestRateByMaturityPeriod() {
+        int maturityPeriod = 10;
+        when(repository.findByMaturityPeriod(eq(maturityPeriod))).thenReturn(Optional.empty());
+        assertThrows(InterestRateNotFoundException.class, () -> interestRateService.findByMaturityPeriod(maturityPeriod),
+                "No interest rate found for maturity period "+maturityPeriod);
+
+        // VERIFY
+        verify(repository, times(1)).findByMaturityPeriod(eq(maturityPeriod));
+        verify(interestRateMapper, never()).toDto(any());
+    }
+
 
 }

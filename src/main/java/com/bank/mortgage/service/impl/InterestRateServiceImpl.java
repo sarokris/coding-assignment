@@ -31,11 +31,18 @@ public class InterestRateServiceImpl implements InterestRateService {
 
     }
 
+    @Override
+    public InterestRateResponse findByMaturityPeriod(int maturityPeriod) {
+        return repository.findByMaturityPeriod(maturityPeriod)
+                .map(this::mapResponse)
+                .orElseThrow(() -> new InterestRateNotFoundException("No interest rate found for maturity period " + maturityPeriod));
+    }
+
     /**
      * Quick workaround since Mapstruct Mapper does not seems to be working
      * TODO needs to move this logic if mapper issue resolved
-     * @param iRate
-     * @return
+     * @param iRate entity
+     * @return Dto
      */
     private InterestRateResponse mapResponse(InterestRates iRate){
         InterestRateResponse dto = interestRateMapper.toDto(iRate);

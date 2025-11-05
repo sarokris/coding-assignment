@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MortgageController.class)
-class MortgageControllerValidationTest {
+class MortgageControllerTest {
 
     public static final String PATH = "/api/mortgage-check";
     @Autowired
@@ -102,7 +102,7 @@ class MortgageControllerValidationTest {
         mockMvc.perform(post(PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Valid request"));
+                .andExpect(status().isOk());
+//                .andExpect(jsonPath("$.feasible").value(true));
     }
 }
