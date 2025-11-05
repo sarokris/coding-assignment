@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class MortgageServiceImpl implements MortgageService {
         InterestRateResponse interestRate = interestRateService.findByMaturityPeriod(request.maturityPeriod());
 
         BigDecimal annualInterestRate = interestRate.interestRate();
-        BigDecimal monthlyPayment = getMonthlyPayment(request, annualInterestRate);
+        BigDecimal monthlyPayment = getMonthlyPayment(request, annualInterestRate).setScale(2, RoundingMode.HALF_UP);
 
         return new MortgageCheckResponse(true,monthlyPayment);
     }
