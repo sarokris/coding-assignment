@@ -7,7 +7,7 @@ import com.bank.mortgage.mapper.InterestRateMapper;
 import com.bank.mortgage.repo.InterestRateRepository;
 import com.bank.mortgage.service.InterestRateService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,7 +21,7 @@ public class InterestRateServiceImpl implements InterestRateService {
     private final InterestRateMapper interestRateMapper;
 
 
-    @CachePut(value = "interestRates", key = "iRates", unless = "#result == null")
+    @Cacheable(value = "interestRates")
     @Override
     public List<InterestRateResponse> getCurrentInterestRates() {
         List<InterestRates> interestRates = repository.findAll();

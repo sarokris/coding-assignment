@@ -15,9 +15,15 @@ import java.util.stream.Collectors;
 public class MortgageControllerAdvice {
 
     @ExceptionHandler(InterestRateNotFoundException.class)
-    public ResponseEntity<Map<String, ?>> handleHolidayExceptioException(InterestRateNotFoundException ex) {
+    public ResponseEntity<Map<String, ?>> handleInterestRateNotFoundException(InterestRateNotFoundException ex) {
         Map<String, String> message = Map.of("message", ex.getMessage());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MortgageProcessingException.class)
+    public ResponseEntity<Map<String, ?>> handleMortgageProcessingException(MortgageProcessingException ex) {
+        Map<String, String> message = Map.of("message", ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

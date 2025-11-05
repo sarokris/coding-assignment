@@ -34,3 +34,52 @@ Treat this application as a real MVP that should go to production.
 
 ## Duration
 This assignment should take 4-5 hours at the most.
+
+# Mortgage Application
+
+A Spring Boot application to calculate mortgage payments based on user input and interest rates stored in the database.
+
+---
+
+## Table of Contents
+
+- [API Documentation](#api-documentation)
+- [Running Locally](#running-locally)
+- [Running with Docker Compose](#running-with-docker-compose)
+
+---
+
+## API Documentation
+
+You can access the Swagger UI for interactive API documentation:
+
+- [Swagger UI](http://localhost:8080/swagger-ui/index.html)
+
+---
+
+## Running Locally
+
+### Prerequisites
+
+- Java 17+
+- Maven 3+
+- H2 database (for local development)
+
+### Steps
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/sarokris/coding-assignment/tree/feature/mortgage-check
+cd mortgage
+```
+
+## Running Locally with Docker Compose
+
+```
+docker-compose build
+docker-compose up
+
+```
+
+

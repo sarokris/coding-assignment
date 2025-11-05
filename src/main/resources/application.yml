@@ -3,7 +3,7 @@ server:
 
 spring:
   cache:
-    type: redis
+    type: none
   data:
    redis:
      host: ${SPRING_DATA_REDIS_HOST:redis}
